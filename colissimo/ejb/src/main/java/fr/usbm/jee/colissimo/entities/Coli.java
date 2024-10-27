@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 @Entity
 public class Coli implements Serializable {
@@ -16,20 +17,25 @@ public class Coli implements Serializable {
 
     private String name;
 
+    @Version
+    private long version;
+
+    // Constructor
+
     public Coli() {
         super();
     }
 
+    public Coli(String name) {
+        this.name = name;
+    }
+
+
+    // Getter Setter
 
     public int getId() {
         return id;
     }
-
-    public Coli(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 
     public void setId(int id) {
         this.id = id;
