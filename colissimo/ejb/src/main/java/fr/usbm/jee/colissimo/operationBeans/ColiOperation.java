@@ -11,23 +11,9 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 
-@DataSourceDefinition (
-        name = "java:app/env/jdbc/MyDataSource",
-        className = "org.postgresql.ds.PGPoolingDataSource",
-        user = "admin",
-        password = "admin",
-        serverName = "localhost",
-        portNumber = 5432,
-        databaseName = "banque"
-)
-
-
-
-
 
 
 @Stateless
-@Remote
 public class ColiOperation {
 
     @PersistenceContext(unitName="colissimo")
@@ -45,8 +31,13 @@ public class ColiOperation {
     }
 
     public List<Coli> findAll() {
-        TypedQuery<Coli> rq = em.createQuery("SELECT * FROM coli", Coli.class);
+        TypedQuery<Coli> rq = em.createQuery("SELECT e FROM Coli e", Coli.class);
         return rq.getResultList();
+    }
+
+    public Coli findById(int id) {
+       Coli coli = em.find(Coli.class, id);
+       return coli;
     }
 
 }

@@ -59,6 +59,7 @@
             <artifactId>ejb</artifactId>
             <version>${revision}</version>
             <scope>provided</scope>
+            <type>ejb</type>
         </dependency>
     </dependencies>
 
