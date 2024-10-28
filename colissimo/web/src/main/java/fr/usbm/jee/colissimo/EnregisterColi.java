@@ -1,10 +1,12 @@
 package fr.usbm.jee.colissimo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import fr.usbm.jee.colissimo.entities.Coli;
+import fr.usbm.jee.colissimo.entities.Progress;
+import fr.usbm.jee.colissimo.entities.Status;
 import fr.usbm.jee.colissimo.operationBeans.ColiOperation;
+import fr.usbm.jee.colissimo.operationBeans.ProgressOperation;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +20,9 @@ public class EnregisterColi extends HttpServlet {
     @EJB
     private ColiOperation coliEJB;
 
+    @EJB
+    private ProgressOperation progressEJB;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/EnregistrementColi.jsp").forward(req, resp);
@@ -26,21 +31,21 @@ public class EnregisterColi extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
+        float weight = Float.parseFloat(req.getParameter("weight"));
+        float value = Float.parseFloat(req.getParameter("value"));
+        String origin = req.getParameter("origin");
+        String destination = req.getParameter("destination");
+        String latitude = req.getParameter("latitude");
+        String longitude = req.getParameter("longitude");
+    
         
-        if (name == null) {
-            resp.sendError(400, "name not set");
-            return;
-        }
+        Coli coli = coliEJB.create(weight, value, origin, destination);
 
-        if (name == "") {
-            resp.sendError(400, "name empty");
-            return;
-        }
+        Progress progress = progressEJB.create(latitude, longitude, origin, Status.Registered, coli);
 
-        Coli coli = coliEJB.create(name);
+        coli = coliEJB.updateProgress(coli, progress);
 
-        PrintWriter out = resp.getWriter();
-        out.print(coli.toString());
+        req.setAttribute("coli", coli);
+        req.getRequestDispatcher("/AfficherColi.jsp").forward(req, resp);
     }
 }

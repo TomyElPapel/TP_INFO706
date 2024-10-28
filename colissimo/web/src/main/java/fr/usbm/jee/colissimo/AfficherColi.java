@@ -1,8 +1,6 @@
 package fr.usbm.jee.colissimo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 import fr.usbm.jee.colissimo.entities.Coli;
 import fr.usbm.jee.colissimo.operationBeans.ColiOperation;
@@ -13,23 +11,25 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/coli")
-public class ColiServlet extends HttpServlet {
+@WebServlet("/afficher")
+public class AfficherColi extends HttpServlet {
     
     @EJB
     private ColiOperation coliEJB;
-    
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Coli> colis = coliEJB.findAll();
+        int coliId = Integer.parseInt(req.getParameter("coliId"));
 
-        PrintWriter out = resp.getWriter();
+        Coli coli = coliEJB.findById(coliId);
 
-        out.print(colis.toString());
+        req.setAttribute("coli", coli);
+        req.getRequestDispatcher("/AfficherColi.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+        this.doGet(req, resp);
     }
 }
