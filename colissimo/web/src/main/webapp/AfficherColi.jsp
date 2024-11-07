@@ -31,7 +31,6 @@
     <p>status : <%= progress.getStatus() %></p>
 
     <br/>
-    <p><%= coli.getPreviousProgress().size() %></p>
 
     <% if (!coli.getPreviousProgress().isEmpty()) { %>
         <h3> previous progress : </h3>

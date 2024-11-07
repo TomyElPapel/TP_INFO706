@@ -1,6 +1,5 @@
 package fr.usbm.jee.colissimo.operationBeans;
 
-import fr.usbm.jee.colissimo.entities.Coli;
 import fr.usbm.jee.colissimo.entities.Progress;
 import fr.usbm.jee.colissimo.entities.Status;
 import jakarta.ejb.Stateless;
