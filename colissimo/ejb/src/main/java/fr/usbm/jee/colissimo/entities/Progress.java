@@ -16,9 +16,10 @@ public class Progress implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name="coli_id", nullable=false)
+    @JoinColumn(name="coli_id")
     private Coli coli;
 
     private String latitude;
@@ -33,17 +34,27 @@ public class Progress implements Serializable {
         super();
     }
 
-    public Progress(String latitude, String longitude, String location, Status status, Coli coli) {
+    public Progress(String latitude, String longitude, String location, Status status) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.location = location;
         this.status = status;
-        this.coli = coli;
+        this.coli = null;
     }
 
 
 
     ///////////// GETTER SETTER ///////////////////
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public Coli getColi() {
         return coli;
     }

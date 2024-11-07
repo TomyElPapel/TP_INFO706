@@ -1,9 +1,10 @@
 package fr.usbm.jee.colissimo;
 
 import java.io.IOException;
-import java.util.List;
 
 import fr.usbm.jee.colissimo.entities.Coli;
+import fr.usbm.jee.colissimo.entities.Progress;
+import fr.usbm.jee.colissimo.entities.Status;
 import fr.usbm.jee.colissimo.operationBeans.ColiOperation;
 import fr.usbm.jee.colissimo.operationBeans.ProgressOperation;
 import jakarta.ejb.EJB;
@@ -13,39 +14,43 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/enregistrer")
-public class EnregisterColi extends HttpServlet {
-    
+
+
+
+@WebServlet("/ajouterEtape")
+public class AjouterEtapeColi extends HttpServlet {
+
     @EJB
     private ColiOperation coliEJB;
 
     @EJB
     private ProgressOperation progressEJB;
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Coli> colis = coliEJB.findAll();
+        int coliId = Integer.parseInt(req.getParameter("coliId"));
 
-        req.setAttribute("colis", colis);
-        req.getRequestDispatcher("/EnregistrementColi.jsp").forward(req, resp);
+        Coli coli = coliEJB.findById(coliId);
+
+        req.setAttribute("coli", coli);
+        req.getRequestDispatcher("/EditerColi.jsp").forward(req, resp);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        float weight = Float.parseFloat(req.getParameter("weight"));
-        float value = Float.parseFloat(req.getParameter("value"));
-        String origin = req.getParameter("origin");
-        String destination = req.getParameter("destination");
+        int coliId = Integer.parseInt(req.getParameter("coliId"));
         String latitude = req.getParameter("latitude");
         String longitude = req.getParameter("longitude");
-    
-        
-        coliEJB.create(weight, value, origin, destination,latitude, longitude);
+        String location = req.getParameter("location");
+        Status status = Status.valueOf(req.getParameter("status"));
 
-        List<Coli> colis = coliEJB.findAll();
+        Coli coli = coliEJB.findById(coliId);
+        Progress progress = progressEJB.create(latitude, longitude, location, status);
+        coliEJB.updateProgress(coli, progress);
 
-        req.setAttribute("colis", colis);
-        req.getRequestDispatcher("/EnregistrementColi.jsp").forward(req, resp);
+        req.setAttribute("coli", coli);
+        req.getRequestDispatcher("/EditerColi.jsp").forward(req, resp);
     }
 }

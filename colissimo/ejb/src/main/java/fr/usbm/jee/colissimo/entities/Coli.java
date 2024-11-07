@@ -1,12 +1,13 @@
 package fr.usbm.jee.colissimo.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,8 +35,8 @@ public class Coli implements Serializable {
     @JoinColumn(name = "current_progress_id")
     private Progress currentProgress;
 
-    @OneToMany(mappedBy = "coli", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Progress> previousProgress = new HashSet<>();
+    @OneToMany(mappedBy = "coli", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Progress> previousProgress = new ArrayList<>();
 
     @Version
     private long version;
@@ -56,6 +57,14 @@ public class Coli implements Serializable {
 
     /////////////////////// SETTER GETTER ///////////////////
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Progress getCurrentProgress() {
         return currentProgress;
     }
@@ -64,11 +73,11 @@ public class Coli implements Serializable {
         this.currentProgress = currentProgress;
     }
 
-    public Set<Progress> getPreviousProgress() {
+    public List<Progress> getPreviousProgress() {
         return previousProgress;
     }
 
-    public void setPreviousProgress(Set<Progress> previousProgress) {
+    public void setPreviousProgress(List<Progress> previousProgress) {
         this.previousProgress = previousProgress;
     }
 

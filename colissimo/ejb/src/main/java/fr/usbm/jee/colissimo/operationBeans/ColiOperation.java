@@ -2,6 +2,8 @@ package fr.usbm.jee.colissimo.operationBeans;
 
 import fr.usbm.jee.colissimo.entities.Coli;
 import fr.usbm.jee.colissimo.entities.Progress;
+import fr.usbm.jee.colissimo.entities.Status;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,6 +17,9 @@ import java.util.List;
 @Stateless
 public class ColiOperation {
 
+    @EJB
+    private ProgressOperation progressEJB;
+
     @PersistenceContext(unitName="colissimo")
     private EntityManager em;
 
@@ -23,8 +28,14 @@ public class ColiOperation {
     }
 
 
-    public Coli create(float weight, float value, String origin, String destination) {
+    public Coli create(float weight, float value, String origin, String destination, String latitude, String lontitude) {
         Coli coli = new Coli(destination, origin, weight, value);
+
+        Progress progress = new Progress(latitude, lontitude, destination, Status.Registered);
+
+        coli.setCurrentProgress(progress);
+
+        em.persist(progress);
         em.persist(coli);
         return coli;
     }
@@ -34,20 +45,23 @@ public class ColiOperation {
         return rq.getResultList();
     }
 
-    public Coli updateProgress(Coli coli, Progress progress) {
+    public void updateProgress(Coli coli, Progress progress) {
         if (progress == null) {
-            return coli;
+            return;
         }
 
         Progress previousProgress = coli.getCurrentProgress();
 
         if (previousProgress != null) {
             coli.getPreviousProgress().add(previousProgress);
+            previousProgress.setColi(coli);
+            em.merge(previousProgress);
         }
 
         coli.setCurrentProgress(progress);
+
+        em.merge(progress);
         em.merge(coli);
-        return coli;
     }
 
     public Coli findById(int id) {

@@ -18,8 +18,8 @@ public class ProgressOperation {
         super();
     }
 
-    public Progress create(String lat, String lon, String location, Status status, Coli coli) {
-        Progress progress = new Progress(lat, lon, location, status, coli);
+    public Progress create(String lat, String lon, String location, Status status) {
+        Progress progress = new Progress(lat, lon, location, status);
         em.persist(progress);
         return progress;
     }
