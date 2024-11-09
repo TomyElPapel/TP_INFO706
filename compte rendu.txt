@@ -6,32 +6,32 @@ Compte Rendu Info706 :
 L'application est divisé en 3 modules :
 
  - module EJB :
-    Le module ejb contient les classes entitées jpa et leurs controlleurs.
-    Il existe deux entitées :
-        Coli : contient la destination et l'origine du coli. Un coli contient egalement une etape 
-            courante (currentProgress) et une liste des ses etapes precedente (previousProgress).
-        Progress : represente une etapes d'un coli (longitude, latitude, location et statut).
-    Les status des coli sont reprensenté par un enum Statut.
-    Les entities ont chacune un operation bean contenant un cruds de base.
+    Le module ejb contient les classes entités jpa et leurs contrôleurs.
+    Il existe deux entités :
+    Coli : contient la destination et l'origine du colis. Un colis contient également une étape 
+        courante (currentProgress) et une liste de ses étapes précédente (previousProgress).
+    Progress : représente une étape d'un colis (longitude, latitude, location et statut).
+    Les statuts des colis sont représenté par un enum Statut.
+    Les entités ont chacune un operation bean contenant un cruds de base.
 
  - module WEB :
-    Le module web contient les interfaces utilisateur en utilisant les operation bean 
-    pour create ou modifier les colis.
-    Une page enregistrer coli pour creer un nouveau coli et visualiser ceux deja existant.
-    Une page afficher coli pour afficher un coli en detail.
-    Une page ajouter etape pour ajouter une nouvelle etape a un coli.
+    Le module web contient les interfaces utilisateur en utilisant les opération bean 
+    pour créer ou modifier les colis.
+    Une page enregistrer colis pour créer un nouveau colis et visualiser ceux déjà existant.
+    Une page afficher colis pour afficher un colis en détail.
+    Une page ajouter étape pour ajouter une nouvelle étape a un colis.
  
  - module EAR :
     Le module EAR est utilisé pour combiner les deux autres modules en un seul module 
-    pour faciliter le deploiment de l'application.
+    pour faciliter le déploiement de l'application.
     
 
-Mode d'emploie :
+Mode d'emploi :
     Lien : /web/enregistrer
-    Page pour creer de nouveau coli.
+    Page pour créer de nouveau colis.
 
     Lien : /web/afficher?coliId={id}
-    Page pour afficher un le detail d'un coli a partir de son id.
+    Page pour afficher un le détail d'un colis à partir de son id.
 
     Lien : /web/ajouterEtape?coliId={id}
-    Page pour afficher un le detail d'un coli a partir de son id et lui ajouter de nouvelle etapes.
+    Page pour afficher un le détail d'un colis à partir de son id et lui ajouter de nouvelle étapes.
