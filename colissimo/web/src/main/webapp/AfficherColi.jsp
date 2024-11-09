@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Afficher coli</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" >
 </head>
 
 <% 
@@ -14,32 +15,32 @@
 
 
 <body>
-    <h1> Coli : </h1>
+    <div>
+        <h1> Coli : </h1>
 
-    <p>id : <%= coli.getId() %></p>
-    <p>weight : <%= coli.getWeight() %></p>
-    <p>value : <%= coli.getValue() %></p>
-    <p>destination : <%= coli.getDestination() %></p>
-    <p>origin : <%= coli.getOrigin() %></p>
+        <p>id : <%= coli.getId() %></p>
+        <p>weight : <%= coli.getWeight() %></p>
+        <p>value : <%= coli.getValue() %></p>
+        <p>destination : <%= coli.getDestination() %></p>
+        <p>origin : <%= coli.getOrigin() %></p>
 
-    <h2> Progress : </h2>
+        <h2> Progress : </h2>
 
-    <p>id : <%= progress.getId() %></p>
-    <p>latitude : <%= progress.getLatitude() %></p>
-    <p>longitude : <%= progress.getLongitude() %></p>
-    <p>location : <%= progress.getLocation() %></p>
-    <p>status : <%= progress.getStatus() %></p>
+        <p>latitude : <%= progress.getLatitude() %></p>
+        <p>longitude : <%= progress.getLongitude() %></p>
+        <p>location : <%= progress.getLocation() %></p>
+        <p>status : <%= progress.getStatus() %></p>
 
-    <br/>
 
-    <% if (!coli.getPreviousProgress().isEmpty()) { %>
-        <h3> previous progress : </h3>
-        <% for (Progress p : coli.getPreviousProgress()) { %>
-            <p>id : <%= p.getId() %></p>
-            <p>latitude : <%=  p.getLatitude() %></p>
-            <p>longitude : <%= p.getLongitude() %></p>
-            <p>location : <%= p.getLocation() %></p>
-            <p>status : <%= p.getStatus() %></p>
+        <% if (!coli.getPreviousProgress().isEmpty()) { %>
+            <h3> previous progress : </h3>
+            <% for (Progress p : coli.getPreviousProgress()) { %>
+                <p>latitude : <%=  p.getLatitude() %></p>
+                <p>longitude : <%= p.getLongitude() %></p>
+                <p>location : <%= p.getLocation() %></p>
+                <p>status : <%= p.getStatus() %></p>
+                <br/>
+            <% } %>
         <% } %>
-    <% } %>
+    </div>
 </body>

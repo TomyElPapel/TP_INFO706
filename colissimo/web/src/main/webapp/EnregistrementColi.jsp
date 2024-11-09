@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Enregistrer colis</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" >
 </head>
 
 <%
@@ -38,7 +39,7 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-    <div>
+    <div id="liste_colis">
         <h2> liste colis : </h2>
         <% for (Coli coli : colis) { %>
             <form action="afficher?coliId=<%= coli.getId() %>" method="post">
